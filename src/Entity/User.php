@@ -40,7 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $Firstname = null;
 
     #[ORM\Column(length: 100)]
-    private ?string $Adress = null;
+    private ?string $address = null;
 
     #[ORM\Column(length: 5)]
     private ?string $Zipcode = null;
@@ -148,14 +148,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAdress(): ?string
+    public function getAddress(): ?string
     {
-        return $this->Adress;
+        return $this->address;
     }
 
-    public function setAdress(string $Adress): static
+    public function setAddress(string $address): static
     {
-        $this->Adress = $Adress;
+        $this->address = $address;
 
         return $this;
     }
