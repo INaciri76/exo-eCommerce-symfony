@@ -18,7 +18,6 @@
 		{% block stylesheets %}{% endblock %}
 		<link
 		rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-
 		{# JS Bootstrap #}
 		<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}" defer></script>
 
@@ -32,12 +31,10 @@
 	</head>
 
 	<body>
-
 		{% include "_partials_/_nav.html.twig" %}
 
 		<div class="main"> {% block body %}{% endblock %}
-			</div>
-
+		</div>
 			{% include "_partials_/_footer.html.twig" %}
 
 		</body>
