@@ -33,6 +33,7 @@ class ProductFixtures extends Fixture
             $category = $this->getReference('cat-' . rand(1, 3), Category::class); 
             $product->setCategory($category);
             $manager->persist($product);
+            $this->addReference('prod-' .$prod, $product);
         }
 
         $manager->flush();
