@@ -13,6 +13,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    public function __construct()
+    {
+
+        $this->createdAt = new \DateTimeImmutable();
+    }
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -24,7 +29,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var list<string> The user roles
      */
-    #[ORM\Column]
+    #[ORM\Column(type: 'json')]
     private array $roles = [];
 
     /**
@@ -49,7 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $City = null;
 
     #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
-    private ?\DateTimeImmutable $Created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
     private bool $isVerified = false;
@@ -186,12 +191,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->Created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $Created_at): static
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
-        $this->Created_at = $Created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
