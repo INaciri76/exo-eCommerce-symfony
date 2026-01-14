@@ -8,25 +8,30 @@ use Doctrine\Persistence\ObjectManager;
 
 class CategoryFixtures extends Fixture
 {
+    private int $cptCat = 1;
+
     public function load(ObjectManager $manager): void
     {   
-        // Creation enregistrement INFORMATIQUE 
-            //créer un nouvel objet Category
+        // Liste des catégories à créer
+        $categories = [
+            'Informatique',
+            'Ordinateur',
+            'Téléphone',
+        ];
+
+        foreach ($categories as $catName) {
+
             $category = new Category();
+            $category->setName($catName);
 
-            //Nourrir l'objet
-            $category->setName('Informatique');
-
-            //Persister les données
             $manager->persist($category);
-            
-        //Creation enregistrement ORDINATEUR
-            $category2= new Category();
-            $category2->setName('Ordinateur');
-            $manager->persist($category2);
 
-        // $product = new Product();
-        // $manager->persist($product);
+            // Ajouter une référence utilisable dans ProductFixtures
+            $this->addReference('cat-' . $this->cptCat, $category);
+
+            $this->cptCat++;
+        }
+
         $manager->flush();
     }
 }
