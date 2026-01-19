@@ -1,6 +1,32 @@
-<h1>Detail Produit </h1>
-<h2>{{ product.name }}</h12>
-<p>{{ product.description }}</p>
-<p>Prix : {{ product.price }} €</p>
-<p>Stock : {{ product.stock }}</p>
-<p>Catégorie : {{ product.category.name }}</p>
+{% extends 'base.html.twig' %}
+{% block title %}
+	{{ product.name }}
+{% endblock %}
+{% block body %}
+	<div class="container mt-4">
+		<h1 class="mb-4">{{ product.name }}</h1>
+		<p>
+			<strong>Catégorie :</strong>
+			{{ product.category.name }}</p>
+		<p>
+			<strong>Description :</strong>
+			{{ product.description }}</p>
+		<p>
+			<strong>Prix :</strong>
+			{{ product.price }}
+			€</p>
+		{% if product.stock > 0 %}
+			<button class="btn btn-success mb-3">Ajouter au panier</button>
+		{% else %}
+			<div class="alert alert-danger mb-3">
+				Ce produit est actuellement en rupture de stock.
+			</div>
+		{% endif %}
+		<h3 class="h5 mt-4">Images</h3>
+		<div class="d-flex gap-3 flex-wrap">
+			{% for image in product.images %}
+				<img src="/assets/uploads/{{ image.name }}" alt="Image du produit" style="width: 200px; height: auto; border-radius: 5px;">
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}
