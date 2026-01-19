@@ -1,9 +1,28 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Hello MainController!
-{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
+<div class="container mt-4">
 
-	<h1>Bienvenue sur mon site d'eCommerce</h1>
-	{% endblock %}
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">Bienvenue sur mon site d'eCommerce</h1>
+        <p class="text-muted">Choisissez une catégorie pour découvrir nos produits</p>
+    </div>
+
+    <h2 class="h4 mb-3">Catégories</h2>
+
+    <ul class="list-group shadow-sm">
+        {% for category in categories %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span class="fw-semibold">{{ category.name }}</span>
+
+                <a href="{{ path('app_category_list', {id: category.id}) }}" 
+                   class="btn btn-outline-primary btn-sm">
+                    Voir les produits
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+</div>
+{% endblock %}

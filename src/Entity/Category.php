@@ -34,11 +34,26 @@ class Category
     #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'category')]
     private Collection $products;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $categoryOrder = null;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->products = new ArrayCollection();
     }
+
+    public function getCategoryOrder(): ?int
+    {
+        return $this->categoryOrder;
+    }
+
+    public function setCategoryOrder(?int $categoryOrder): static
+    {
+        $this->categoryOrder = $categoryOrder;
+        return $this;
+    }
+
 
     public function getId(): ?int
     {
