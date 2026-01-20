@@ -55,11 +55,32 @@ class ProductController extends AbstractController
     }
 
     #[Route('/admin/products/edit/{id}', name: 'admin_product_edit')]
-    public function edit(Product $product): Response
+    public function edit(Product $product, Request $request, EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted(ProductVoter::EDIT, $product);
-        return $this->render('admin/product/edit.html.twig', ['product' => $product]);
+
+        // Formulaire prérempli
+        $form = $this->createForm(ProductFormType::class, $product);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // Convertir le prix en centimes
+            $product->setPrice($product->getPrice() * 100);
+
+            $em->flush();
+
+            $this->addFlash('success', 'Produit modifié avec succès');
+
+            return $this->redirectToRoute('admin_product_index');
+        }
+
+        return $this->render('admin/product/edit.html.twig', [
+            'form' => $form->createView(),
+            'product' => $product,
+        ]);
     }
+
 
     #[Route('/admin/products/delete/{id}', name: 'admin_product_delete')]
     public function delete(Product $product, EntityManagerInterface $manager)

@@ -7,6 +7,6 @@
     {{ form_row(form.stock) }}
     {{ form_row(form.category) }}
 
-    <button class="btn btn-primary mt-3">Ajouter</button>
+    <button class="btn btn-primary"> {{ button_label|default('Ajouter') }} </button>
 
 {{ form_end(form) }}
