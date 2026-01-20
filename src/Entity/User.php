@@ -56,9 +56,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column]
-    private bool $isVerified = false;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -73,6 +70,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->email = $email;
 
+        return $this;
+    }
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $is_verified = false;
+
+    public function isVerified(): bool
+    {
+        return $this->is_verified;
+    }
+    
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->is_verified = $isVerified;
         return $this;
     }
 
@@ -201,15 +212,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setIsVerified(bool $isVerified): static
-    {
-        $this->isVerified = $isVerified;
-
-        return $this;
-    }
 }
