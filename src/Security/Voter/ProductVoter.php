@@ -12,12 +12,7 @@ class ProductVoter extends Voter
     public const EDIT = 'PRODUCT_EDIT';
     public const DELETE = 'PRODUCT_DELETE';
 
-    private Security $security;
-
-    public function __construct(Security $security)
-    {
-        $this->security = $security;
-    }
+    public function __construct(private Security $security) {}
 
     protected function supports(string $attribute, mixed $subject): bool
     {
@@ -27,27 +22,12 @@ class ProductVoter extends Voter
 
     protected function voteOnAttribute(string $attribute, mixed $product, TokenInterface $token): bool
     {
-        // Exemple : si tu veux autoriser les admins
+        // Tous les admins peuvent modifier/supprimer
         if ($this->security->isGranted('ROLE_ADMIN')) {
             return true;
         }
 
-        return match ($attribute) {
-            self::EDIT => $this->canEdit($product),
-            self::DELETE => $this->canDelete($product),
-            default => false,
-        };
-    }
-
-    private function canEdit(Product $product): bool
-    {
-        // Exemple : autoriser si le produit coûte moins de 100€
-        return $product->getPrice() < 100;
-    }
-
-    private function canDelete(Product $product): bool
-    {
-        // Exemple : autoriser si le produit n’a pas d’images
-        return count($product->getImages()) === 0;
+        // Sinon, personne d'autre n'a accès
+        return false;
     }
 }
